@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#101116">
   <meta name="description" content="The Underground — Your campus. Your voice.">
   <title>The Underground | Campus Community</title>
@@ -16,7 +18,7 @@
   <a class="brand" href="#" aria-label="The Underground home">
     <span class="brand-icon">u.</span><span class="brand-word">the <b>underground</b></span>
   </a>
-  <label class="search"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search discussions" aria-label="Search posts"></label>
+  <label class="search"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" maxlength="100" autocomplete="off" placeholder="Search discussions" aria-label="Search posts"></label>
   <button class="guest-pill" type="button"><span class="online-dot"></span> Guest</button>
 </header>
 <div class="app-layout">
@@ -26,37 +28,35 @@
     <button class="nav-item" data-page="trending"><span class="nav-icon">↗</span><span>Trending</span></button>
     <button class="nav-item" data-page="confessions"><span class="nav-icon">◉</span><span>Confessions</span></button>
     <button class="nav-item" data-page="saved"><span class="nav-icon">▱</span><span>Saved</span></button>
-    <p class="section-label community-label">COMMUNITIES <span>+</span></p>
-    <div id="departmentList"></div>
-    <p class="section-label">CAMPUS</p>
+    <p class="section-label campus-label">CAMPUS</p>
     <button class="nav-item" data-page="events"><span class="nav-icon">✳</span><span>Events</span></button>
     <button class="nav-item" data-page="concerns"><span class="nav-icon">⚑</span><span>Raise a concern</span></button>
     <div class="sidebar-footer"><div class="guest-avatar">G</div><div><strong>Anonymous Guest</strong><small>Browsing privately</small></div><span class="more-dots">···</span></div>
   </aside>
   <main class="feed">
     <div class="feed-heading"><div><span class="eyebrow">THE CAMPUS COMMUNITY</span><h1 id="feedTitle">Your campus, unfiltered.</h1></div><select id="sortSelect" aria-label="Sort posts"><option value="new">Latest</option><option value="hot">Hot</option><option value="top">Top</option></select></div>
-    <section class="community-strip" aria-label="Popular communities">
+    <section class="community-strip" aria-label="Browse by topic">
       <button class="community-chip active" data-filter="all"><span class="chip-symbol">✳</span> For you</button>
-      <button class="community-chip" data-filter="General"><span class="chip-symbol">◌</span> General</button>
       <button class="community-chip" data-filter="Confession"><span class="chip-symbol">☾</span> Confessions</button>
-      <button class="community-chip" data-filter="Medicine"><span class="chip-symbol">＋</span> Medicine</button>
-      <button class="community-chip" data-filter="Engineering"><span class="chip-symbol">⌘</span> Engineering</button>
+      <button class="community-chip" data-filter="Academics"><span class="chip-symbol">✎</span> Academics</button>
+      <button class="community-chip" data-filter="Clinical"><span class="chip-symbol">＋</span> Clinical</button>
+      <button class="community-chip" data-filter="Campus Life"><span class="chip-symbol">◌</span> Campus life</button>
     </section>
     <section class="composer">
       <div class="guest-avatar">G</div>
-      <button id="openComposer" class="composer-trigger">Start a conversation...</button>
-      <button id="quickCreate" class="create-icon" aria-label="Create post">＋</button>
+      <button id="openComposer" class="composer-trigger" type="button">Start a conversation...</button>
+      <button id="quickCreate" class="create-icon" type="button" aria-label="Create post">＋</button>
     </section>
     <div id="composerPanel" class="composer-panel hidden">
       <h3>Create a post</h3>
-      <input id="postTitle" maxlength="140" placeholder="Give your post a title...">
+      <input id="postTitle" maxlength="140" autocomplete="off" placeholder="Give your post a title...">
       <textarea id="postBody" maxlength="5000" placeholder="Share what's on your mind..."></textarea>
-      <div class="composer-controls"><select id="postCategory" aria-label="Post category"><option value="General">General</option><option value="Confession">Confession</option><option value="Medicine">Medicine</option><option value="Engineering">Engineering</option><option value="Computer Science">Computer Science</option><option value="Arts & Design">Arts & Design</option><option value="Campus Concern">Campus Concern</option><option value="Events">Events</option></select><button id="publishPost" class="primary-btn">Post anonymously <span>↗</span></button></div>
+      <div class="composer-controls"><p class="auto-note">Your post's topic is assigned automatically.</p><button id="publishPost" class="primary-btn" type="button">Post anonymously <span>↗</span></button></div>
       <p class="demo-note">Demo mode: posts are stored only in this browser session. They are not yet private or shared with other students.</p>
     </div>
     <div class="feed-subhead"><span>Recent conversations</span><span class="live-label"><i></i> COMMUNITY FEED</span></div>
     <section id="posts" class="posts" aria-live="polite"></section>
-    <div id="emptyState" class="empty hidden"><span>◌</span><h3>Nothing here yet.</h3><p>Start a conversation in your community.</p></div>
+    <div id="emptyState" class="empty hidden"><span>◌</span><h3>Nothing here yet.</h3><p>Start a conversation on campus.</p></div>
   </main>
   <aside class="rightbar">
     <div class="right-card pulse-card"><span class="eyebrow">CAMPUS PULSE</span><h3>What's happening?</h3><div class="pulse-line"><span class="pulse-dot"></span> The community is open</div><p>Find your people. Share what's happening. Keep the conversation going.</p></div>
@@ -65,8 +65,8 @@
     <footer class="site-footer">THE UNDERGROUND © 2026<br>Built for students, by students.</footer>
   </aside>
 </div>
-<nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-tab active" data-page="home"><span>⌂</span><small>Home</small></button><button class="mobile-tab" data-page="trending"><span>↗</span><small>Explore</small></button><button class="mobile-tab create-tab" id="mobileCreate"><span>＋</span><small>Create</small></button><button class="mobile-tab" data-page="confessions"><span>◉</span><small>Confess</small></button><button class="mobile-tab" data-page="saved"><span>▱</span><small>Saved</small></button></nav>
-<div id="postModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-content"><button id="closeModal" class="close-btn" aria-label="Close">×</button><div id="modalContent"></div></div></div>
+<nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-tab active" data-page="home"><span>⌂</span><small>Home</small></button><button class="mobile-tab" data-page="trending"><span>↗</span><small>Explore</small></button><button class="mobile-tab create-tab" id="mobileCreate" type="button"><span>＋</span><small>Create</small></button><button class="mobile-tab" data-page="confessions"><span>◉</span><small>Confess</small></button><button class="mobile-tab" data-page="saved"><span>▱</span><small>Saved</small></button></nav>
+<div id="postModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-content"><button id="closeModal" class="close-btn" type="button" aria-label="Close">×</button><div id="modalContent"></div></div></div>
 <div id="toast" class="toast" role="status"></div>
 <script src="app.js"></script>
 </body>
