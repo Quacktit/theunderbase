@@ -8,7 +8,7 @@
     return;
   }
 
-  /* ------------------------------------------------------------------
+  /* -----------------------------------------------------------------
      CONFIG
      classifyEndpoint: URL of YOUR OWN backend route that calls the
      third-party AI (OpenAI, Gemini, Claude, etc). Never put an AI API
